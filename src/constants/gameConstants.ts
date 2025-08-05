@@ -1,8 +1,9 @@
 import type { Position } from "../types/game"
+import { generateFood } from "../lib/gameUtils"
 
 export const GRID_SIZE = 16
-export const INITIAL_SNAKE: Position[] = [{ x: 10, y: 10 }]
-export const INITIAL_FOOD: Position = { x: 5, y: 5 }
+export const INITIAL_SNAKE: Position[] = [{ x: 5, y: 5 }]
+export const INITIAL_FOOD = generateFood(INITIAL_SNAKE)
 export const GAME_SPEED = 150
 export const MAX_LEADERBOARD_ENTRIES = 5
 export const SCORE_PER_FOOD = 10

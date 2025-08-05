@@ -22,8 +22,8 @@ export const useGameState = () => {
 
 			// Check food collision
 			if (positionsEqual(head, food)) {
-				setScore((prev) => prev + SCORE_PER_FOOD)
-				setFood(generateFood())
+				setScore((prev) => prev + SCORE_PER_FOOD / 2)
+				setFood(generateFood(newSnake))
 			} else {
 				newSnake.pop()
 			}

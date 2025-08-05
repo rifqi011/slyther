@@ -2,13 +2,25 @@ import type { Position, Direction } from "../types/game"
 import { GRID_SIZE } from "../constants/gameConstants"
 
 /**
- * Generate random food position
+ * Generate random food position avoiding snake body
  */
-export const generateFood = (): Position => {
-	return {
-		x: Math.floor(Math.random() * GRID_SIZE),
-		y: Math.floor(Math.random() * GRID_SIZE),
+export const generateFood = (snakeBody: Position[]): Position => {
+	// Create array of available positions
+	const availablePositions: Position[] = []
+
+	// Find all positions not occupied by snake
+	for (let x = 0; x < GRID_SIZE; x++) {
+		for (let y = 0; y < GRID_SIZE; y++) {
+			const pos = { x, y }
+			if (!snakeBody.some((segment) => positionsEqual(segment, pos))) {
+				availablePositions.push(pos)
+			}
+		}
 	}
+
+	// Get random position from available ones
+	const randomIndex = Math.floor(Math.random() * availablePositions.length)
+	return availablePositions[randomIndex]
 }
 
 /**
