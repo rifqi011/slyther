@@ -11,16 +11,20 @@ const GameGrid: React.FC<GameGridProps> = ({ snake, food, gameState }) => {
 			const isSnakeBody = snake.slice(1).some((segment) => segment.x === x && segment.y === y)
 			const isFood = food.x === x && food.y === y
 
-			let cellClass = "w-6 h-6 border border-gray-600"
+			let cellClass = "w-6 h-6"
 
 			if (isSnakeHead) {
-				cellClass += " bg-red-500 shadow-[2px_2px_0px_black]"
+				cellClass += " bg-blue-500 shadow-[2px_2px_0px_black]"
 			} else if (isSnakeBody) {
-				cellClass += " bg-green-500 shadow-[1px_1px_0px_black]"
+				cellClass += " bg-blue-400 shadow-[1px_1px_0px_black]"
 			} else if (isFood) {
-				cellClass += " bg-yellow-400 shadow-[2px_2px_0px_black]"
+				cellClass += " bg-red-500 shadow-[2px_2px_0px_black]"
 			} else {
-				cellClass += " bg-white"
+				if ((x + y) % 2 === 0) {
+					cellClass += " bg-[#a7d948]"
+				} else {
+					cellClass += " bg-[#8ecc39]"
+				}
 			}
 
 			cells.push(<div key={`${x}-${y}`} className={cellClass} />)
