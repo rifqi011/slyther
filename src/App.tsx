@@ -20,7 +20,7 @@ import { GAME_SPEED } from "./constants/gameConstants"
 
 const SnakeGame: React.FC = () => {
 	// Game state management
-	const { snake, food, /* direction, */ setDirection, gameState, /* setGameState, */ score, moveSnake, resetGame, startGame } = useGameState()
+	const { snake, food, /* direction, */ setDirection, gameState, /* setGameState, */ score, countdown, moveSnake, resetGame, startGame } = useGameState()
 
 	// Leaderboard management
 	const { leaderboard, addScore, isHighScore, loading, error } = useFirestoreLeaderboard()
@@ -76,7 +76,7 @@ const SnakeGame: React.FC = () => {
 
 						{/* Center - Game Grid */}
 						<div className="flex justify-center">
-							<GameGrid snake={snake} food={food} gameState={gameState} />
+							<GameGrid snake={snake} food={food} gameState={gameState} countdown={countdown} />
 						</div>
 
 						{/* Right Panel - Leaderboard */}

@@ -5,7 +5,7 @@ export type Position = {
 
 export type Direction = "UP" | "DOWN" | "LEFT" | "RIGHT"
 
-export type GameState = "MENU" | "PLAYING" | "GAME_OVER"
+export type GameState = "MENU" | "PLAYING" | "GAME_OVER" | "COUNTDOWN"
 
 export interface LeaderboardEntry {
 	id?: string
@@ -17,7 +17,8 @@ export interface LeaderboardEntry {
 export interface GameGridProps {
 	snake: Position[]
 	food: Position
-	gameState: GameState
+    gameState: GameState
+    countdown?: number
 }
 
 export interface ScoreDisplayProps {

@@ -1,5 +1,5 @@
 import type { Position, Direction, GameState } from "../types/game"
-import { useState, useCallback } from "react"
+import { useState, useCallback, useEffect, useRef } from "react"
 import { INITIAL_SNAKE, INITIAL_FOOD, SCORE_PER_FOOD } from "../constants/gameConstants"
 import { generateFood, checkCollision, getNextHeadPosition, positionsEqual } from "../lib/gameUtils"
 
@@ -9,7 +9,8 @@ export const useGameState = () => {
 	const [direction, setDirection] = useState<Direction>("RIGHT")
 	const [gameState, setGameState] = useState<GameState>("MENU")
 	const [score, setScore] = useState(0)
-	// const gameLoopRef = useRef<NodeJS.Timeout>()
+	const [countdown, setCountdown] = useState(3)
+	const countdownIntervalRef = useRef<NodeJS.Timeout>(undefined)
 
 	const moveSnake = useCallback(() => {
 		if (gameState !== "PLAYING") return
@@ -38,6 +39,27 @@ export const useGameState = () => {
 		})
 	}, [direction, food, gameState])
 
+	useEffect(() => {
+		if (gameState === "COUNTDOWN") {
+			countdownIntervalRef.current = setInterval(() => {
+				setCountdown((prev) => {
+					if (prev <= 1) {
+						clearInterval(countdownIntervalRef.current)
+						setGameState("PLAYING")
+						return 3
+					}
+					return prev - 1
+				})
+			}, 1000)
+		}
+
+		return () => {
+			if (countdownIntervalRef.current) {
+				clearInterval(countdownIntervalRef.current)
+			}
+		}
+	}, [gameState])
+
 	const resetGame = useCallback(() => {
 		setSnake(INITIAL_SNAKE)
 		setFood(INITIAL_FOOD)
@@ -51,7 +73,7 @@ export const useGameState = () => {
 		setFood(INITIAL_FOOD)
 		setDirection("RIGHT")
 		setScore(0)
-		setGameState("PLAYING")
+		setGameState("COUNTDOWN")
 	}, [])
 
 	return {
@@ -61,7 +83,8 @@ export const useGameState = () => {
 		setDirection,
 		gameState,
 		setGameState,
-		score,
+        score,
+        countdown,
 		moveSnake,
 		resetGame,
 		startGame,

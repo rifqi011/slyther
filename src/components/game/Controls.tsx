@@ -9,6 +9,10 @@ const Controls: React.FC<ControlsProps> = ({ gameState, onRestart, onStart }) =>
 				<button onClick={onStart} className={`w-full ${BUTTON_CLASSES.primary}`}>
 					PLAY GAME
 				</button>
+			) : gameState === "COUNTDOWN" ? (
+				<button disabled className={`w-full opacity-50 cursor-not-allowed ${BUTTON_CLASSES.primary}`}>
+					STARTING...
+				</button>
 			) : (
 				<button onClick={onRestart} className={`w-full ${BUTTON_CLASSES.secondary}`}>
 					NEW GAME

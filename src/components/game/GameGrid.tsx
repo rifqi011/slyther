@@ -2,7 +2,7 @@ import React from "react"
 import type { GameGridProps } from "../../types/game"
 import { GRID_SIZE } from "../../constants/gameConstants"
 
-const GameGrid: React.FC<GameGridProps> = ({ snake, food, gameState }) => {
+const GameGrid: React.FC<GameGridProps> = ({ snake, food, gameState, countdown = 3 }) => {
 	const cells = []
 
 	for (let y = 0; y < GRID_SIZE; y++) {
@@ -42,6 +42,15 @@ const GameGrid: React.FC<GameGridProps> = ({ snake, food, gameState }) => {
 					<div className="bg-yellow-400 border-4 border-black px-8 py-6 shadow-[8px_8px_0px_black] transform rotate-2 text-center">
 						<div className="text-2xl font-black text-black mb-2">READY TO PLAY?</div>
 						<div className="text-lg font-bold text-black">Click PLAY GAME to start!</div>
+					</div>
+				</div>
+			)}
+
+			{gameState === "COUNTDOWN" && (
+				<div className="absolute inset-0 bg-black bg-opacity-80 flex items-center justify-center">
+					<div className="bg-orange-400 border-4 border-black px-12 py-8 shadow-[8px_8px_0px_black] transform -rotate-1 text-center">
+						<div className="text-lg font-bold text-black mb-4">GET READY!</div>
+						<div className="text-6xl font-black text-black animate-pulse">{countdown}</div>
 					</div>
 				</div>
 			)}
