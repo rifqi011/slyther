@@ -1,7 +1,7 @@
 import type { Position, Direction, GameState } from "../types/game"
 import { useState, useCallback, useEffect, useRef } from "react"
 import { INITIAL_SNAKE, INITIAL_FOOD, SCORE_PER_FOOD } from "../constants/gameConstants"
-import { generateFood, checkCollision, getNextHeadPosition, positionsEqual } from "../lib/gameUtils"
+import { generateFood, checkCollision, getNextHeadPosition, positionsEqual, getOppositeDirection } from "../lib/gameUtils"
 
 export const useGameState = () => {
 	const [snake, setSnake] = useState<Position[]>(INITIAL_SNAKE)
@@ -38,6 +38,18 @@ export const useGameState = () => {
 			return newSnake
 		})
 	}, [direction, food, gameState])
+
+	const changeDirection = useCallback(
+		(newDirection: Direction) => {
+			if (gameState !== "PLAYING") return
+
+			setDirection((prev) => {
+				// Prevent going in opposite direction
+				return getOppositeDirection(prev) !== newDirection ? newDirection : prev
+			})
+		},
+		[gameState]
+	)
 
 	useEffect(() => {
 		if (gameState === "COUNTDOWN") {
@@ -81,10 +93,11 @@ export const useGameState = () => {
 		food,
 		direction,
 		setDirection,
+		changeDirection,
 		gameState,
 		setGameState,
-        score,
-        countdown,
+		score,
+		countdown,
 		moveSnake,
 		resetGame,
 		startGame,

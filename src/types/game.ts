@@ -31,6 +31,11 @@ export interface ControlsProps {
 	onStart: () => void
 }
 
+export interface MobileControlsProps {
+    gameState: GameState
+    onDirectionChange: (direction: Direction) => void
+}
+
 export interface LeaderboardProps {
 	entries: LeaderboardEntry[]
 	loading: boolean

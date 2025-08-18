@@ -17,10 +17,11 @@ import { useKeyboardControls } from "./hooks/useKeyboardControls"
 
 // Constants
 import { GAME_SPEED } from "./constants/gameConstants"
+import MobileControls from "./components/game/MobileControls"
 
 const SnakeGame: React.FC = () => {
 	// Game state management
-	const { snake, food, /* direction, */ setDirection, gameState, /* setGameState, */ score, countdown, moveSnake, resetGame, startGame } = useGameState()
+	const { snake, food, /* direction, */ setDirection, gameState, /* setGameState, */ score, countdown, moveSnake, resetGame, startGame, changeDirection } = useGameState()
 
 	// Leaderboard management
 	const { leaderboard, addScore, isHighScore, loading, error } = useFirestoreLeaderboard()
@@ -75,8 +76,12 @@ const SnakeGame: React.FC = () => {
 						</div>
 
 						{/* Center - Game Grid */}
-						<div className="flex justify-center">
+						<div className="flex justify-center flex-col items-center relative">
 							<GameGrid snake={snake} food={food} gameState={gameState} countdown={countdown} />
+
+							<div className="block mt-8 lg:hidden">
+								<MobileControls gameState={gameState} onDirectionChange={changeDirection} />
+							</div>
 						</div>
 
 						{/* Right Panel - Leaderboard */}
